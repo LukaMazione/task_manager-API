@@ -21,13 +21,13 @@ export default [
     },
     rules: {
       ...tsPlugin.configs.recommended.rules,
-      'no-console': 'warn',
+      'no-console': 'error',
       '@typescript-eslint/no-unused-vars': [
         'error',
         { argsIgnorePattern: '^_' },
       ],
-      '@typescript-eslint/explicit-function-return-type': 'warn',
-      '@typescript-eslint/no-explicit-any': 'warn',
+      '@typescript-eslint/explicit-function-return-type': 'error',
+      '@typescript-eslint/no-explicit-any': 'error',
     },
   },
 ];

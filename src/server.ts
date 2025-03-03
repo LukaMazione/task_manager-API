@@ -15,7 +15,7 @@ app.use(
   }),
 );
 
-// eslint-disable-next-line no-console
 app.listen(Number(config.port), '0.0.0.0', () => {
+  // eslint-disable-next-line no-console
   console.log(`Server is running on port ${config.port}`);
 });

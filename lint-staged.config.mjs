@@ -1,6 +1,7 @@
 export default {
   "**/*.ts": [
     "yarn prettify",
-    "yarn lint"
+    "yarn lint",
+    () => "yarn typecheck"
   ]
 }
