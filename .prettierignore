@@ -1,0 +1,27 @@
+# ignore config files
+*.config.js
+*.config.mjs
+
+# ignore folders
+node_modules
+dist
+build
+
+# ignore lock files
+package-lock.json
+yarn.lock
+
+# ignore env files
+.env*
+
+# ignore doc files
+README.md
+CHANGELOG.md
+
+# ignore test files
+**/*.test.ts
+**/*.spec.ts
+
+# ignore all except src
+/*
+!/src

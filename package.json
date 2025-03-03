@@ -9,7 +9,7 @@
     "build": "tsc",
     "typecheck": "tsc --noEmit --incremental",
     "lint": "eslint",
-    "prettify": "yarn prettier --write",
+    "prettify": "yarn prettier --write --ignore-path .prettierignore",
     "prepare": "husky install"
   },
   "dependencies": {
