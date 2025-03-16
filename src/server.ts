@@ -1,7 +1,10 @@
 import express from 'express';
+import 'express-async-errors';
 import cors from 'cors';
 import { config } from './config';
 import rateLimit from 'express-rate-limit';
+import { errorHandler } from './middlewares/errorHandler';
+import { adminRouter } from './routes/admin.router';
 
 const app = express();
 
@@ -14,6 +17,10 @@ app.use(
     limit: 100,
   }),
 );
+
+app.use('/admin', adminRouter);
+
+app.use(errorHandler);
 
 app.listen(Number(config.port), '0.0.0.0', () => {
   // eslint-disable-next-line no-console
