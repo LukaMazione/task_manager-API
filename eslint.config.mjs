@@ -21,7 +21,7 @@ export default [
     },
     rules: {
       ...tsPlugin.configs.recommended.rules,
-      'no-console': 'error',
+      'no-console': ['error', { allow: ['error'] }],
       '@typescript-eslint/no-unused-vars': [
         'error',
         { argsIgnorePattern: '^_' },

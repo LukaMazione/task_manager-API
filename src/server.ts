@@ -5,12 +5,13 @@ import { config } from './config';
 import rateLimit from 'express-rate-limit';
 import { errorHandler } from './middlewares/errorHandler';
 import { adminRouter } from './routes/admin.router';
+import path from 'path';
 
 const app = express();
 
 app.use(cors());
 app.use(express.json());
-
+app.use('/uploads', express.static(path.resolve(__dirname, '../uploads')));
 app.use(
   rateLimit({
     windowMs: 5 * 1000 * 60,
