@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import multer from 'multer';
+import { logger } from '../utils/logger';
 
 export class DatabaseError extends Error {}
 export class UploadError extends Error {}
@@ -11,6 +12,8 @@ export const errorHandler = (
   res: Response,
   _next: NextFunction,
 ): void => {
+  logger.error(`Uncatched error: ${error}`);
+
   if (error instanceof DatabaseError) {
     res.status(500).json({ error: error.message });
     return;

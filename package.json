@@ -4,9 +4,9 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "start": "ts-node src/server.ts",
-    "dev": "tsnd src/server.ts",
-    "build": "tsc",
+    "start": "cross-env NODE_ENV=production ts-node src/server.ts",
+    "dev": "cross-env NODE_ENV=development tsnd src/server.ts",
+    "build": "cross-env NODE_ENV=production tsc",
     "typecheck": "tsc --noEmit --incremental",
     "lint": "eslint",
     "prettify": "yarn prettier --write --ignore-path .prettierignore",
@@ -20,6 +20,7 @@
     "express-rate-limit": "^7.5.0",
     "multer": "^1.4.5-lts.1",
     "mysql2": "^3.12.0",
+    "pino": "^9.6.0",
     "uuid": "^11.1.0"
   },
   "devDependencies": {
@@ -30,9 +31,11 @@
     "@types/node": "^22.13.8",
     "@typescript-eslint/eslint-plugin": "^8.25.0",
     "@typescript-eslint/parser": "^8.25.0",
+    "cross-env": "^7.0.3",
     "eslint": "^9.21.0",
     "husky": "^8.0.0",
     "lint-staged": "^15.4.3",
+    "pino-pretty": "^13.0.0",
     "prettier": "^3.5.2",
     "ts-node": "^10.9.2",
     "ts-node-dev": "^2.0.0",
