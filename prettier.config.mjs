@@ -1,10 +1,11 @@
-export default {
+export default  {
   semi: true,
   singleQuote: true,
   trailingComma: "all",
   tabWidth: 2,
-  printWidth: 100,
+  printWidth: 80,
   arrowParens: "always",
   bracketSpacing: true,
+  bracketSameLine: false,
   endOfLine: "lf",
 };
