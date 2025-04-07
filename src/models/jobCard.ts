@@ -4,12 +4,6 @@ import { v4 as uuid } from 'uuid';
 import { DatabaseError } from '../middlewares/errorHandler';
 import { logger } from '../utils/logger';
 
-export interface JobCardCreate {
-  job_card_number: string;
-  chassis_number?: string;
-  image_path: string;
-}
-
 export interface JobCardRow {
   id: string;
   job_card_number: string;
@@ -19,26 +13,31 @@ export interface JobCardRow {
   updated_at: string | null;
 }
 
+export interface JobCardCreate {
+  job_card_number: string;
+  chassis_number?: string;
+  image_path: string;
+}
+
 type UpdatebleJobCardFields = Partial<
   Pick<JobCardRow, 'chassis_number' | 'image_path' | 'job_card_number'>
 >;
 
 export class JobCardModel {
-  id!: string;
+  id: string;
   job_card_number: string;
   chassis_number?: string | null;
   image_path: string;
-  created_at!: string;
-  updated_at!: string;
+  created_at: string;
+  updated_at: string;
 
-  constructor(data: JobCardCreate | JobCardRow) {
-    if (`id` in data) this.id = data.id;
+  constructor(data: JobCardRow) {
+    this.id = data.id;
     this.job_card_number = data.job_card_number;
     this.chassis_number = data.chassis_number ?? null;
     this.image_path = data.image_path;
-    if (`created_at` in data) this.created_at = data.created_at;
-    if (`updated_at` in data)
-      this.updated_at = data.updated_at ?? data.created_at;
+    this.created_at = data.created_at;
+    this.updated_at = data.updated_at ?? data.created_at;
   }
 
   static async create(
@@ -48,11 +47,13 @@ export class JobCardModel {
   ): Promise<JobCardModel> {
     try {
       const id = uuid();
+      const safeChassisNo =
+        typeof chassis_number === 'undefined' ? null : chassis_number;
 
       await db.execute<ResultSetHeader>(
         `INSERT INTO job_cards (id, job_card_number, chassis_number, image_path) 
          VALUES (:id, :job_card_number, :chassis_number, :image_path)`,
-        [id, job_card_number, chassis_number ?? null, image_path],
+        { id, job_card_number, chassis_number: safeChassisNo, image_path },
       );
 
       const [rows] = await db.execute<(RowDataPacket & JobCardRow)[]>(
@@ -71,7 +72,7 @@ export class JobCardModel {
 
       if (error instanceof DatabaseError) throw error;
     }
-    throw new DatabaseError('Unexpected database error (create)');
+    throw new DatabaseError('Unexpected database error (JobCardModel.create)');
   }
 
   static async getAll(): Promise<JobCardModel[]> {
@@ -92,11 +93,11 @@ export class JobCardModel {
 
   static async findById(id: string): Promise<JobCardModel | null> {
     try {
-      const [result] = await db.execute<(RowDataPacket & JobCardRow)[]>(
+      const [row] = await db.execute<(RowDataPacket & JobCardRow)[]>(
         'SELECT * FROM job_cards WHERE `id` = :id',
         { id },
       );
-      return result.length === 0 ? null : new JobCardModel(result[0]);
+      return row.length === 0 ? null : new JobCardModel(row[0]);
     } catch (error) {
       logger.error('Error in JobCardModel.findById:', {
         name: error instanceof Error ? error.name : 'UnknownError',
@@ -104,7 +105,9 @@ export class JobCardModel {
       });
       if (error instanceof DatabaseError) throw error;
     }
-    throw new DatabaseError('Unexpected database error (findById)');
+    throw new DatabaseError(
+      'Unexpected database error (JobCardModel.findById)',
+    );
   }
 
   static async findByJobCardNumber(
@@ -123,7 +126,9 @@ export class JobCardModel {
       });
       if (error instanceof DatabaseError) throw error;
     }
-    throw new DatabaseError('Unexpected database error (findByJobCardNumber)');
+    throw new DatabaseError(
+      'Unexpected database error (JobCardModel.findByJobCardNumber)',
+    );
   }
 
   static async findByChassisNumber(
@@ -144,7 +149,9 @@ export class JobCardModel {
       });
       if (error instanceof DatabaseError) throw error;
     }
-    throw new DatabaseError('Unexpected database error (findByChassisNumber)');
+    throw new DatabaseError(
+      'Unexpected database error (JobCardModel.findByChassisNumber)',
+    );
   }
 
   async update(fields: UpdatebleJobCardFields): Promise<this> {
@@ -180,8 +187,8 @@ export class JobCardModel {
         name: error instanceof Error ? error.name : 'UnknownError',
         message: error instanceof Error ? error.message : String(error),
       });
-      throw new DatabaseError('Unexpected database error (update)');
     }
+    throw new DatabaseError('Unexpected database error (JobCardModel.update)');
   }
 
   async delete(id: string): Promise<void> {
@@ -196,6 +203,6 @@ export class JobCardModel {
       });
       if (error instanceof DatabaseError) throw error;
     }
-    throw new DatabaseError('Unexpected database error (delete)');
+    throw new DatabaseError('Unexpected database error (JobCardModel.delete)');
   }
 }
