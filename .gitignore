@@ -16,6 +16,10 @@ tmp
 # Build
 public/css/main.css
 
+# TypeScript build info file
+*.tsbuildinfo
+
+
 # Coverage reports
 coverage
 
