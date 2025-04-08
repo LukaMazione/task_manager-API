@@ -47,13 +47,16 @@ export class JobCardModel {
   ): Promise<JobCardModel> {
     try {
       const id = uuid();
-      const safeChassisNo =
-        typeof chassis_number === 'undefined' ? null : chassis_number;
 
       await db.execute<ResultSetHeader>(
         `INSERT INTO job_cards (id, job_card_number, chassis_number, image_path) 
          VALUES (:id, :job_card_number, :chassis_number, :image_path)`,
-        { id, job_card_number, chassis_number: safeChassisNo, image_path },
+        {
+          id,
+          job_card_number,
+          chassis_number: chassis_number ?? null,
+          image_path,
+        },
       );
 
       const [rows] = await db.execute<(RowDataPacket & JobCardRow)[]>(
