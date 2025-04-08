@@ -1,5 +1,5 @@
 import { Request, Response, Router } from 'express';
-import { JobCardModel } from '../models/jobCard';
+import { JobCardModel } from '../models/JobCard';
 import { UploadError } from '../middlewares/errorHandler';
 import { upload } from '../middlewares/upload';
 
