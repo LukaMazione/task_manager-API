@@ -10,7 +10,8 @@
     "typecheck": "tsc --noEmit --incremental",
     "lint": "eslint",
     "prettify": "yarn prettier --write --ignore-path .prettierignore",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "seed": "ts-node scripts/seedAdmin.ts"
   },
   "dependencies": {
     "bcrypt": "^5.1.1",

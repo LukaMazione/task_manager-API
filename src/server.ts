@@ -4,7 +4,6 @@ import cors from 'cors';
 import { config } from './utils/config';
 import rateLimit from 'express-rate-limit';
 import { errorHandler } from './middlewares/errorHandler';
-import { adminRouter } from './routes/admin.router';
 import path from 'path';
 import { logger } from './utils/logger';
 
@@ -19,8 +18,6 @@ app.use(
     limit: 100,
   }),
 );
-
-app.use('/admin', adminRouter);
 
 app.use(errorHandler);
 
