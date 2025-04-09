@@ -24,21 +24,20 @@ type UpdatebleJobCardFields = Partial<
 >;
 
 export class JobCardModel {
-  id!: string;
+  id: string;
   job_card_number: string;
   chassis_number?: string | null;
   image_path: string;
-  created_at!: string;
-  updated_at!: string;
+  created_at: string;
+  updated_at: string;
 
-  constructor(data: JobCardCreate | JobCardRow) {
-    if (`id` in data) this.id = data.id;
+  constructor(data: JobCardRow) {
+    this.id = data.id;
     this.job_card_number = data.job_card_number;
     this.chassis_number = data.chassis_number ?? null;
     this.image_path = data.image_path;
-    if (`created_at` in data) this.created_at = data.created_at;
-    if (`updated_at` in data)
-      this.updated_at = data.updated_at ?? data.created_at;
+    this.created_at = data.created_at;
+    this.updated_at = data.updated_at ?? data.created_at;
   }
 
   static async create(
