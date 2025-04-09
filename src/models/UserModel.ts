@@ -56,6 +56,7 @@ export class UserModel {
 
       if (rows.length === 0) throw new DatabaseError('Fail to create user');
       return new UserModel(rows[0]);
+      
     } catch (error) {
       logger.error('Error in UserModel.create:', {
         name: error instanceof Error ? error.name : 'UnknownError',
