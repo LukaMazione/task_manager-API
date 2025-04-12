@@ -6,6 +6,7 @@ export class DatabaseError extends Error {}
 export class UploadError extends Error {}
 export class FileUploadError extends Error {}
 export class ValidationError extends Error {}
+export class AuthenticationError extends Error {}
 
 export const errorHandler = (
   error: Error,
@@ -37,6 +38,10 @@ export const errorHandler = (
 
   if (error instanceof ValidationError) {
     res.status(400).json({ error: error.message });
+  }
+
+  if (error instanceof AuthenticationError) {
+    res.status(401).json({ error: error.message });
   }
 
   res.status(500).json({ error: 'An unexpected error occurred' });

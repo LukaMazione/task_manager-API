@@ -6,6 +6,7 @@ import rateLimit from 'express-rate-limit';
 import { errorHandler } from './middlewares/errorHandler';
 import path from 'path';
 import { logger } from './utils/logger';
+import { authRouter } from './routes/authRouter';
 
 const app = express();
 
@@ -18,6 +19,8 @@ app.use(
     limit: 100,
   }),
 );
+
+app.use('/', authRouter);
 
 app.use(errorHandler);
 
