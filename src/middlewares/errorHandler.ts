@@ -7,6 +7,7 @@ export class UploadError extends Error {}
 export class FileUploadError extends Error {}
 export class ValidationError extends Error {}
 export class AuthenticationError extends Error {}
+export class AuthorizationError extends Error {}
 
 export const errorHandler = (
   error: Error,
@@ -43,6 +44,11 @@ export const errorHandler = (
 
   if (error instanceof AuthenticationError) {
     res.status(401).json({ error: error.message });
+    return;
+  }
+
+  if (error instanceof AuthorizationError) {
+    res.status(403).json({ error: error.message });
     return;
   }
 

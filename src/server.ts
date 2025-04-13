@@ -7,6 +7,7 @@ import { errorHandler } from './middlewares/errorHandler';
 import path from 'path';
 import { logger } from './utils/logger';
 import { authRouter } from './routes/authRouter';
+import { adminRouter } from './routes/adminRouter';
 
 const app = express();
 
@@ -21,6 +22,7 @@ app.use(
 );
 
 app.use('/', authRouter);
+app.use('/admin', adminRouter);
 
 app.use(errorHandler);
 

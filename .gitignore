@@ -45,4 +45,4 @@ dist/**/*
 yarn.lock
 
 # ignore own files
-appConfig.md
+github_branching_strategy.md

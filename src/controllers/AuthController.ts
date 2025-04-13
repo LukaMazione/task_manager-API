@@ -25,7 +25,7 @@ export const authController = async (
   if (!user || !(await user.verifyPassword(password)))
     throw new AuthenticationError('Wrong credentials');
 
-  res.locals.user = user;
+  res.locals.user = user; //temporary later we'll change that for cookies or JWT
 
   res
     .status(200)
