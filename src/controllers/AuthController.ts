@@ -23,7 +23,7 @@ export const authController = async (
   const user = await UserModel.findByUsername(username);
 
   if (!user || !(await user.verifyPassword(password)))
-    throw new AuthenticationError('Wrong creditentials');
+    throw new AuthenticationError('Wrong credentials');
 
   res.locals.user = user;
 
