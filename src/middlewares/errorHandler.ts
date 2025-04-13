@@ -38,10 +38,12 @@ export const errorHandler = (
 
   if (error instanceof ValidationError) {
     res.status(400).json({ error: error.message });
+    return;
   }
 
   if (error instanceof AuthenticationError) {
     res.status(401).json({ error: error.message });
+    return;
   }
 
   res.status(500).json({ error: 'An unexpected error occurred' });

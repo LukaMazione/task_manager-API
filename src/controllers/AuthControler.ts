@@ -17,11 +17,11 @@ export const authController = async (
 ): Promise<void> => {
   const { username, password } = req.body;
 
-  if (username || password)
+  if (!username || !password)
     throw new ValidationError('Missing username and/or password');
 
   const user = await UserModel.findByUsername(username);
-  if (!user) throw new AuthenticationError(`user: ${user} doesn't exist`);
+  if (!user) throw new AuthenticationError(`user: ${username} doesn't exist`);
 
   const isValidPassword = await user.verifyPassword(password);
   if (!isValidPassword) throw new AuthenticationError(`Wrong password`);
