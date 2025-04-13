@@ -1,6 +1,6 @@
 import { Router } from 'express';
-import { requireAdmin } from '../middlewares/requireAdmin';
+import { requireRole } from '../middlewares/requireRole';
 
 export const adminRouter = Router();
 
-adminRouter.use(requireAdmin);
+adminRouter.use(requireRole('admin'));
