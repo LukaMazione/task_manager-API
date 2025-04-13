@@ -21,14 +21,13 @@ export const authController = async (
     throw new ValidationError('Missing username and/or password');
 
   const user = await UserModel.findByUsername(username);
-  if (!user) throw new AuthenticationError(`user: ${username} doesn't exist`);
 
-  const isValidPassword = await user.verifyPassword(password);
-  if (!isValidPassword) throw new AuthenticationError(`Wrong password`);
+  if (!user || !(await user.verifyPassword(password)))
+    throw new AuthenticationError('Wrong creditentials');
 
   res.locals.user = user;
 
   res
-    .status(201)
+    .status(200)
     .json({ id: user.id, username: user.username, role: user.role });
 };
