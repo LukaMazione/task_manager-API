@@ -46,3 +46,4 @@ yarn.lock
 
 # ignore own files
 github_branching_strategy.md
+testing_locals.md
